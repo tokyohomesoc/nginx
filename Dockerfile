@@ -43,7 +43,6 @@ ARG NGX_CONFIG="\
         --add-module=./ngx_aws_auth-${NGX_AWS_AUTH} \
         --add-module=./nginx-ct-${NGX_CT_VERSION} \
         --add-module=./headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION} \
-        --add-module=./ngx_brotli-master \
     "
 
 RUN \

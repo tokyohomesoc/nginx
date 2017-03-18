@@ -1,5 +1,9 @@
 # Tokyo Home SOC ngin base image
 
+| Branch | Travis CI |
+|:-------|:----------|
+| master | [![Build Status](https://travis-ci.org/tokyohomesoc/nginx.svg?branch=master)](https://travis-ci.org/tokyohomesoc/nginx) |
+
 
 ## Add Module
 * [anomalizer/ngx_aws_auth](https://github.com/anomalizer/ngx_aws_auth)
