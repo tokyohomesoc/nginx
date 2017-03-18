@@ -3,7 +3,7 @@
 ### conf
 ```conf
 log_format main "time:$time_local\t"
-                "host:$host\t"
+                "http_host:$host\t"
                 "hostname:$hostname\t"
                 "remote_addr:$remote_addr\t"
                 "remote_user:$remote_user\t"
@@ -41,7 +41,7 @@ log_format main "time:$time_local\t"
 # sample log
 ```
 time:13/Dec/2016:12:20:51 +0900	
-host:172.18.15.23	
+http_host:172.18.15.23	
 hostname:e266fe5fd998	
 remote_addr:10.42.131.60	
 status:200	
