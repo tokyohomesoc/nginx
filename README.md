@@ -1,4 +1,4 @@
-# Tokyo Home SOC ngin base image
+# Tokyo Home SOC nginx base image
 
 | Branch | Travis CI |
 |:-------|:----------|
