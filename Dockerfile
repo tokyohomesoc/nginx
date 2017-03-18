@@ -137,7 +137,6 @@ RUN \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY conf/ /etc/nginx/conf.d/
 COPY nginx_logformat.conf /etc/nginx/nginx_logformat.conf
 
 
