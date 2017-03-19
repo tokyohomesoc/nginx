@@ -137,7 +137,7 @@ RUN \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY log_format.conf /etc/nginx/conf.d/log_format.conf
+COPY log_format.conf /etc/nginx/log_format.conf
 
 EXPOSE 80 443
 
