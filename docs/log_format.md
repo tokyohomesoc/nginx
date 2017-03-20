@@ -2,7 +2,7 @@
 
 ### conf
 ```conf
-log_format main "time:$time_local\t"
+log_format main "time_ngx:$time_local\t"
                 "http_host:$host\t"
                 "hostname:$hostname\t"
                 "remote_addr:$remote_addr\t"
@@ -40,7 +40,7 @@ log_format main "time:$time_local\t"
 
 # sample log
 ```
-time:13/Dec/2016:12:20:51 +0900	
+time_ngx:13/Dec/2016:12:20:51 +0900	
 http_host:172.18.15.23	
 hostname:e266fe5fd998	
 remote_addr:10.42.131.60	
