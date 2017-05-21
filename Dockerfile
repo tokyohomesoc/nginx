@@ -11,7 +11,7 @@ ARG HEADERS_MORE_NGINX_MODULE_VERSION=0.32
 ## ngx_aws_auth
 ARG NGX_AWS_AUTH=2.1.1
 ## nginx
-ARG NGX_VERSION=1.11.10
+ARG NGX_VERSION=1.13.0
 ARG NGX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8
 ARG NGX_CONFIG="\
         --prefix=/etc/nginx \
@@ -140,5 +140,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY log_format.conf /etc/nginx/log_format.conf
 
 EXPOSE 80 443
+
+STOPSIGNAL SIGQUIT
 
 CMD ["nginx", "-g", "daemon off;"]
