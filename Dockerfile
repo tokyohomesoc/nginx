@@ -1,17 +1,25 @@
 FROM alpine:latest
 
-MAINTAINER HomeSOC Tokyo <github@homesoc.tokyo>
+LABEL maintainer "Naoki Aoyama<n.aoyama@homesoc.io>"
+LABEL Description="Ngnix docker image" Vendor="HomeSOC Organization" Version="1.1"
+
 
 # Environment variable
 ARG TIMEZONE=Asia/Tokyo
+
 ## nginx-ct
-ARG NGX_CT_VERSION=1.3.2
+ARG NGX_CT_VERSION='1.3.2'
 ## headers-more-nginx-module
-ARG HEADERS_MORE_NGINX_MODULE_VERSION=0.32
+
+ARG HEADERS_MORE_NGINX_MODULE_VERSION='0.33'
 ## ngx_aws_auth
-ARG NGX_AWS_AUTH=2.1.1
+ARG NGX_AWS_AUTH='2.1.1'
+
+## nginx-json-log
+ARG NGNIX_JSON_LOG='0.0.6'
+
 ## nginx
-ARG NGX_VERSION=1.13.0
+ARG NGX_VERSION='1.13.12'
 ARG NGX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8
 ARG NGX_CONFIG="\
         --prefix=/etc/nginx \
@@ -43,6 +51,7 @@ ARG NGX_CONFIG="\
         --add-module=./ngx_aws_auth-${NGX_AWS_AUTH} \
         --add-module=./nginx-ct-${NGX_CT_VERSION} \
         --add-module=./headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION} \
+        --add-module=./nginx-json-log-${NGNIX_JSON_LOG} \
     "
 
 RUN \
@@ -96,6 +105,13 @@ RUN \
         -o headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION}.tar.gz \
     && tar -zxC ./ -f headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION}.tar.gz \
     && rm headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION}.tar.gz \
+    \
+    ## nginx-json-log
+    # https://github.com/fooinha/nginx-json-log
+    && curl -fSL https://github.com/fooinha/nginx-json-log/archive/v${NGNIX_JSON_LOG}.tar.gz \
+        -o nginx-json-log-${NGNIX_JSON_LOG}.tar.gz \
+    && tar -zxC ./ -f nginx-json-log-${NGNIX_JSON_LOG}.tar.gz \
+    && rm nginx-json-log-${NGNIX_JSON_LOG}.tar.gz \
     \
     && ./configure $NGX_CONFIG --with-debug \
     && make -j$(getconf _NPROCESSORS_ONLN) \
