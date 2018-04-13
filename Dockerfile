@@ -74,6 +74,7 @@ RUN \
         curl \
         gnupg \
         libxslt-dev \
+        jansson-dev \
     && curl -fSL http://nginx.org/download/nginx-$NGX_VERSION.tar.gz -o nginx.tar.gz \
     && curl -fSL http://nginx.org/download/nginx-$NGX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
     && export GNUPGHOME="$(mktemp -d)" \
