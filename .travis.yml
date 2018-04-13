@@ -13,8 +13,6 @@ before_install:
   - sudo apt-get -y install docker-ce
   - docker version
   - docker info
-  # prepare docker test requirements
-  - make update-dependencies
 
 script:
   - make $TEST_TARGET
