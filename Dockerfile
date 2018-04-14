@@ -48,6 +48,8 @@ ARG NGX_CONFIG="\
         --with-compat \
         --with-http_v2_module \
         \
+        --with-cc=/usr/bin/gcc \
+        \
         --add-module=./ngx_aws_auth-${NGX_AWS_AUTH} \
         --add-module=./nginx-ct-${NGX_CT_VERSION} \
         --add-module=./headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION} \
@@ -75,6 +77,7 @@ RUN \
         gnupg \
         libxslt-dev \
         jansson-dev \
+    \
     && curl -fSL http://nginx.org/download/nginx-$NGX_VERSION.tar.gz -o nginx.tar.gz \
     && curl -fSL http://nginx.org/download/nginx-$NGX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
     && export GNUPGHOME="$(mktemp -d)" \
