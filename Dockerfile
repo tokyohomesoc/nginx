@@ -46,7 +46,7 @@ ARG NGX_CONFIG="\
         --with-http_v2_module \
         \
         --with-http_geoip_module \
-        --with-stream_geoip_module=dynamic \
+        --with-stream_geoip_module \
         \
         --add-module=./ngx_aws_auth-${NGX_AWS_AUTH} \
         --add-module=./nginx-ct-${NGX_CT_VERSION} \
