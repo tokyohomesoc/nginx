@@ -10,10 +10,13 @@ ARG TIMEZONE=Asia/Tokyo
 ## nginx-ct
 ARG NGX_CT_VERSION='1.3.2'
 ## headers-more-nginx-module
-
 ARG HEADERS_MORE_NGINX_MODULE_VERSION='0.33'
+
 ## ngx_aws_auth
 ARG NGX_AWS_AUTH='2.1.1'
+
+## nginx-json-log
+ARG NGNIX_JSON_LOG='0.0.6'
 
 ## nginx
 ARG NGX_VERSION='1.13.12'
@@ -45,9 +48,6 @@ ARG NGX_CONFIG="\
         --with-compat \
         --with-http_v2_module \
         \
-        --with-http_geoip_module \
-        --with-stream_geoip_module \
-        \
         --add-module=./ngx_aws_auth-${NGX_AWS_AUTH} \
         --add-module=./nginx-ct-${NGX_CT_VERSION} \
         --add-module=./headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION} \
@@ -73,24 +73,23 @@ RUN \
         curl \
         gnupg \
         libxslt-dev \
-        geoip-dev \
     \
     && curl -fSL http://nginx.org/download/nginx-$NGX_VERSION.tar.gz -o nginx.tar.gz \
     && curl -fSL http://nginx.org/download/nginx-$NGX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
-    && export GNUPGHOME="$(mktemp -d)" \
-        && found=''; \
-        for server in \
-                ha.pool.sks-keyservers.net \
-                hkp://keyserver.ubuntu.com:80 \
-                hkp://p80.pool.sks-keyservers.net:80 \
-                pgp.mit.edu \
-        ; do \
-                echo "Fetching GPG key $NGX_GPG_KEYS from $server"; \
-                gpg --keyserver "$server" --keyserver-options timeout=10 --recv-keys "$NGX_GPG_KEYS" && found=yes && break; \
-        done; \
-        test -z "$found" && echo >&2 "error: failed to fetch GPG key $NGX_GPG_KEYS" && exit 1; \
-        gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
-    && rm -rf "$GNUPGHOME" nginx.tar.gz.asc \
+	&& export GNUPGHOME="$(mktemp -d)" \
+	&& found=''; \
+	for server in \
+		ha.pool.sks-keyservers.net \
+		hkp://keyserver.ubuntu.com:80 \
+		hkp://p80.pool.sks-keyservers.net:80 \
+		pgp.mit.edu \
+	; do \
+		echo "Fetching GPG key $NGX_GPG_KEYS from $server"; \
+		gpg --keyserver "$server" --keyserver-options timeout=10 --recv-keys "$NGX_GPG_KEYS" && found=yes && break; \
+	done; \
+	test -z "$found" && echo >&2 "error: failed to fetch GPG key $NGX_GPG_KEYS" && exit 1; \
+	gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
+	&& rm -rf "$GNUPGHOME" nginx.tar.gz.asc \
     && mkdir -p /usr/src \
     && tar -zxC /usr/src -f nginx.tar.gz \
     && rm nginx.tar.gz \
@@ -117,8 +116,7 @@ RUN \
     && tar -zxC ./ -f headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION}.tar.gz \
     && rm headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION}.tar.gz \
     \
-    && ./configure $NGX_CONFIG \
-        --with-debug \
+    && ./configure $NGX_CONFIG --with-debug \
     && make -j$(getconf _NPROCESSORS_ONLN) \
     && mv objs/nginx objs/nginx-debug \
     && ./configure $NGX_CONFIG \
@@ -157,9 +155,10 @@ RUN \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY log_format.conf /etc/nginx/log_format.conf
 
 EXPOSE 80 443
-
 STOPSIGNAL SIGQUIT
 
 CMD ["nginx", "-g", "daemon off;"]
