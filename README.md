@@ -6,12 +6,11 @@
 
 
 ## Add Module
-* [anomalizer/ngx_aws_auth](https://github.com/anomalizer/ngx_aws_auth)
-    * v2.1.1
-* [openresty/headers-more-nginx-module](https://github.com/openresty/headers-more-nginx-module)
-    * v0.32
-* [grahamedgecombe/nginx-ct](https://github.com/grahamedgecombe/nginx-ct)
-    * v1.3.2
+
+  * [openresty/headers-more-nginx-module](https://github.com/openresty/headers-more-nginx-module)
+      * v0.32
+  * [grahamedgecombe/nginx-ct](https://github.com/grahamedgecombe/nginx-ct)
+      * v1.3.2
 
 ## LICENSE
 
