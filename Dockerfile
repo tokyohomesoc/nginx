@@ -63,7 +63,10 @@ RUN \
 			--with-compat \
 			--with-file-aio \
 			--with-http_v2_module \
-		" \
+			\
+			--add-module=./nginx-ct-${NGX_CT_VERSION} \
+      --add-module=./headers-more-nginx-module-${HEADERS_MORE_NGINX_MODULE_VERSION} \
+	" \
 	&& addgroup -S nginx \
 	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
 	&& apk add --no-cache --virtual .build-deps \
