@@ -163,7 +163,7 @@ RUN \
 
 COPY nginx.conf 			/etc/nginx/nginx.conf
 COPY log_format.conf 	/etc/nginx/log_format.conf
-COPY conf.d 					/etc/ngnix/conf.d
+COPY conf.d/ 					/etc/ngnix/conf.d/
 
 EXPOSE 80 443
 STOPSIGNAL SIGTERM
